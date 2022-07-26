@@ -5,8 +5,8 @@ export class Satellite {
 	launchDate: string;
 	orbitType: string;
 	operational: boolean;
-	alternateColor: string = 'red';
-	checkWarning: boolean = true;
+	satellites: string = 'red';
+	satellite: boolean = true;
 
 	constructor(name: string, type: string, launchDate: string, orbitType: string, operational: boolean) {
 		this.name = name;
@@ -18,7 +18,7 @@ export class Satellite {
 	
 	
 isSpaceDebris():boolean {
-	return this.type.toLowerCase() === "Space Debris"
+	return this.type.toLowerCase() === "space debris"
 	
 }
 }
