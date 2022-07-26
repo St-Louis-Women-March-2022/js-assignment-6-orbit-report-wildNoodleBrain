@@ -2,47 +2,52 @@ import { Component } from '@angular/core';
 import { Satellite } from './satellite';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'orbit-report';
+	title = 'orbit-report';
 
-  sourceList: Satellite[];
-  displayList: Satellite[];
+	sourceList: Satellite[];
+	displayList: Satellite[];
 
 	constructor() {
 		this.sourceList = [];
 		this.displayList = [];
 		let satellitesUrl = 'https://handlers.education.launchcode.org/static/satellites.json';
 
-		window.fetch(satellitesUrl).then(function (response) {
+		window.fetch(satellitesUrl).then(function(response) {
 			response.json().then(function (data) {
 
 				let fetchedSatellites = data.satellites;
 				// loop over satellites
-				for(let i=0; i < fetchedSatellites.length; i++) {
+				//for (let i = 0; i < data.Satellites.length; i++) {
 					// create a Satellite object 
+					let i = 0
+					while(fetchedSatellites.length > this.sourceList.length) {
 					let satellite = new Satellite(fetchedSatellites[i].name, fetchedSatellites[i].type, fetchedSatellites[i].launchDate, fetchedSatellites[i].orbitType, fetchedSatellites[i].operational);
 					// add the new Satellite object to sourceList 
 					this.sourceList.push(satellite);
-				 }
+					i += 1;
+				}
 
-				 // make a copy of the sourceList to be shown to the user
-				 this.displayList = this.sourceList.slice(0);
-	  
+				// make a copy of the sourceList to be shown to the user
+
+				this.displayList = this.sourceList.slice(0);
 			}.bind(this));
+
 		}.bind(this));
 
-	}
+	};
 
 	search(searchTerm: string): void {
 		let matchingSatellites: Satellite[] = [];
 		searchTerm = searchTerm.toLowerCase();
-		for(let i=0; i < this.sourceList.length; i++) {
+		for (let i = 0; i < this.sourceList.length; i++) {
 			let name = this.sourceList[i].name.toLowerCase();
-			if (name.indexOf(searchTerm) >= 0) {
+			let type = this.sourceList[i].type.toLocaleLowerCase();
+			if (name.indexOf(searchTerm) >= 0 || type.indexOf(searchTerm) >= 0) {
 				matchingSatellites.push(this.sourceList[i]);
 			}
 		}
@@ -52,4 +57,4 @@ export class AppComponent {
 	}
 
 
-}
+};
