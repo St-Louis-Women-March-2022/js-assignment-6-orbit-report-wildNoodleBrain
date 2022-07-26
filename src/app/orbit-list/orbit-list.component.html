@@ -16,7 +16,7 @@
     
     <tr *ngFor="let satellite of satellites"><!--tr means table row for graph look-->
         <td>{{satellite.name}}</td>
-        <td class.warning (click)="satellite.isSpaceDebris()">{{satellite.type}}</td>
+        <td [class.warning] ="satellite.isSpaceDebris()">{{satellite.type}}</td>
         <td>{{satellite.operational}}</td>
         <td>{{satellite.orbitType}}</td>
         <td>{{satellite.launchDate}}</td>
